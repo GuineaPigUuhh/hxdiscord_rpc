@@ -1,4 +1,4 @@
-[submodule "project/-Zet0x0-discord-rpc"]
+[submodule "project/Zet0x0-discord-rpc"]
 	path = project/Zet0x0-discord-rpc
 	url = https://github.com/Zet0x0/discord-rpc
 [submodule "project/rapidjson"]
