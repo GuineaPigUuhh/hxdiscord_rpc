@@ -9,19 +9,6 @@ class Types {} // blank
 @:include('discord_rpc.h')
 @:unreflective
 @:structAccess
-@:native('DiscordButton')
-extern class DiscordButton {
-	@:native('DiscordButton')
-	static function create():DiscordButton;
-
-	var label:cpp.ConstCharStar;
-	var url:cpp.ConstCharStar;
-}
-
-@:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
-@:include('discord_rpc.h')
-@:unreflective
-@:structAccess
 @:native('DiscordRichPresence')
 extern class DiscordRichPresence {
 	@:native('DiscordRichPresence')
@@ -52,9 +39,11 @@ extern class DiscordRichPresence {
 	var joinSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var spectateSecret:cpp.ConstCharStar; /* max 128 bytes */
 
-	/* Special */
-	var buttons:cpp.RawConstPointer<DiscordButton>;
+	/* Buttons */
+	var buttonLabel:cpp.ConstCharStar;
+	var buttonUrl:cpp.ConstCharStar;
 
+	/* ??? */
 	var instance:cpp.Int8;
 }
 
@@ -70,7 +59,6 @@ extern class DiscordUser {
 	var userId:cpp.ConstCharStar;
 	var username:cpp.ConstCharStar;
 	var discriminator:cpp.ConstCharStar;
-	var globalName:cpp.ConstCharStar;
 	var avatar:cpp.ConstCharStar;
 }
 

@@ -48,9 +48,6 @@ void RpcConnection::Open()
         sendFrame.length = (uint32_t)JsonWriteHandshakeObj(
           sendFrame.message, sizeof(sendFrame.message), RpcVersion, appId);
 
-        if (onDebug)
-            onDebug(true, &sendFrame);
-
         if (connection->Write(&sendFrame, sizeof(MessageFrameHeader) + sendFrame.length)) {
             state = State::SentHandshake;
         }
@@ -74,8 +71,6 @@ bool RpcConnection::Write(const void* data, size_t length)
     sendFrame.opcode = Opcode::Frame;
     memcpy(sendFrame.message, data, length);
     sendFrame.length = (uint32_t)length;
-    if (onDebug)
-        onDebug(true, &sendFrame);
     if (!connection->Write(&sendFrame, sizeof(MessageFrameHeader) + length)) {
         Close();
         return false;
@@ -111,9 +106,6 @@ bool RpcConnection::Read(JsonDocument& message)
             readFrame.message[readFrame.length] = 0;
         }
 
-        if (onDebug)
-            onDebug(false, &readFrame);
-
         switch (readFrame.opcode) {
         case Opcode::Close: {
             message.ParseInsitu(readFrame.message);
@@ -127,8 +119,6 @@ bool RpcConnection::Read(JsonDocument& message)
             return true;
         case Opcode::Ping:
             readFrame.opcode = Opcode::Pong;
-            if (onDebug)
-                onDebug(true, &readFrame);
             if (!connection->Write(&readFrame, sizeof(MessageFrameHeader) + readFrame.length)) {
                 Close();
             }

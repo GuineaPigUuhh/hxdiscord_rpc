@@ -149,37 +149,42 @@ size_t JsonWriteRichPresenceObj(char* dest,
                     }
                 }
 
-                // Send secrets only when buttons aren't set
-                if (!presence->buttons) {
-                    if ((presence->matchSecret && presence->matchSecret[0]) ||
-                        (presence->joinSecret && presence->joinSecret[0]) ||
-                        (presence->spectateSecret && presence->spectateSecret[0])) {
-                        WriteObject secrets(writer, "secrets");
-                        WriteOptionalString(writer, "match", presence->matchSecret);
-                        WriteOptionalString(writer, "join", presence->joinSecret);
-                        WriteOptionalString(writer, "spectate", presence->spectateSecret);
+                if ((presence->matchSecret && presence->matchSecret[0]) ||
+                    (presence->joinSecret && presence->joinSecret[0]) ||
+                    (presence->spectateSecret && presence->spectateSecret[0])) {
+                    WriteObject secrets(writer, "secrets");
+                    WriteOptionalString(writer, "match", presence->matchSecret);
+                    WriteOptionalString(writer, "join", presence->joinSecret);
+                    WriteOptionalString(writer, "spectate", presence->spectateSecret);
+                }
+
+                if (((presence->button1Label && presence->button1Label[0]) &&
+                     (presence->button1Url && presence->button1Url[0])) ||
+                    ((presence->button2Label && presence->button2Label[0]) &&
+                     (presence->button2Url && presence->button2Url[0]))) {
+                    WriteArray buttons(writer, "buttons");
+
+                    if ((presence->button1Label && presence->button1Label[0]) &&
+                        (presence->button1Url && presence->button1Url[0])) {
+                        WriteObject button1(writer);
+                        writer.Key("label");
+                        writer.String(presence->button1Label);
+                        writer.Key("url");
+                        writer.String(presence->button1Url);
+                    }
+
+                    if ((presence->button2Label && presence->button2Label[0]) &&
+                        (presence->button2Url && presence->button2Url[0])) {
+                        WriteObject button2(writer);
+                        writer.Key("label");
+                        writer.String(presence->button2Label);
+                        writer.Key("url");
+                        writer.String(presence->button2Url);
                     }
                 }
 
                 writer.Key("instance");
                 writer.Bool(presence->instance != 0);
-
-                if (presence->buttons) {
-                    WriteArray buttons(writer, "buttons");
-
-                    for (uint8_t i = 0; true; i++) {
-                        const DiscordButton& btn = presence->buttons[i];
-
-                        if (!btn.label || !btn.label[0])
-                            break;
-
-                        WriteObject button(writer);
-                        WriteKey(writer, "url");
-                        writer.String(btn.url);
-                        WriteKey(writer, "label");
-                        writer.String(btn.label);
-                    }
-                }
             }
         }
     }
@@ -261,112 +266,6 @@ size_t JsonWriteJoinReply(char* dest, size_t maxLen, const char* userId, int rep
 
             WriteKey(writer, "user_id");
             writer.String(userId);
-        }
-
-        JsonWriteNonce(writer, nonce);
-    }
-
-    return writer.Size();
-}
-
-size_t JsonWriteAcceptInvite(char* dest,
-                             size_t maxLen,
-                             const char* userId,
-                             /* DISCORD_ACTIVITY_ACTION_TYPE_ */ int8_t type,
-                             const char* sessionId,
-                             const char* channelId,
-                             const char* messageId,
-                             int nonce)
-{
-    JsonWriter writer(dest, maxLen);
-
-    {
-        WriteObject obj(writer);
-
-        WriteKey(writer, "cmd");
-        writer.String("ACCEPT_ACTIVITY_INVITE");
-
-        WriteKey(writer, "args");
-        {
-            WriteObject args(writer);
-
-            WriteKey(writer, "user_id");
-            writer.String(userId);
-
-            WriteKey(writer, "type");
-            writer.Int(type);
-
-            WriteKey(writer, "session_id");
-            writer.String(sessionId);
-
-            WriteKey(writer, "channel_id");
-            writer.String(channelId);
-
-            WriteKey(writer, "message_id");
-            writer.String(messageId);
-        }
-
-        JsonWriteNonce(writer, nonce);
-    }
-
-    return writer.Size();
-}
-
-size_t JsonWriteOpenOverlayActivityInvite(char* dest,
-                                          size_t maxLen,
-                                          int8_t type,
-                                          int nonce,
-                                          int pid)
-{
-    JsonWriter writer(dest, maxLen);
-
-    {
-        WriteObject obj(writer);
-
-        WriteKey(writer, "cmd");
-        writer.String("OPEN_OVERLAY_ACTIVITY_INVITE");
-
-        WriteKey(writer, "args");
-        {
-            WriteObject args(writer);
-
-            WriteKey(writer, "type");
-            writer.Int(type);
-
-            // just to make sure?
-            WriteKey(writer, "pid");
-            writer.Int(pid);
-        }
-
-        JsonWriteNonce(writer, nonce);
-    }
-
-    return writer.Size();
-}
-
-size_t JsonWriteOpenOverlayGuildInvite(char* dest,
-                                       size_t maxLen,
-                                       const char* code,
-                                       int nonce,
-                                       int pid)
-{
-    JsonWriter writer(dest, maxLen);
-
-    {
-        WriteObject obj(writer);
-
-        WriteKey(writer, "cmd");
-        writer.String("OPEN_OVERLAY_GUILD_INVITE");
-
-        WriteKey(writer, "args");
-        {
-            WriteObject args(writer);
-
-            WriteKey(writer, "code");
-            writer.String(code);
-
-            WriteKey(writer, "pid");
-            writer.Int(pid);
         }
 
         JsonWriteNonce(writer, nonce);

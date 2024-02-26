@@ -42,11 +42,10 @@ struct RpcConnection {
     State state{State::Disconnected};
     void (*onConnect)(JsonDocument& message){nullptr};
     void (*onDisconnect)(int errorCode, const char* message){nullptr};
-    void (*onDebug)(bool out, MessageFrame* frame){nullptr};
     char appId[64]{};
     int lastErrorCode{0};
     char lastErrorMessage[256]{};
-    MessageFrame sendFrame;
+    RpcConnection::MessageFrame sendFrame;
 
     static RpcConnection* Create(const char* applicationId);
     static void Destroy(RpcConnection*&);
