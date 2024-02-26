@@ -40,8 +40,10 @@ extern class DiscordRichPresence {
 	var spectateSecret:cpp.ConstCharStar; /* max 128 bytes */
 
 	/* Buttons */
-	var buttonLabel:cpp.ConstCharStar;
-	var buttonUrl:cpp.ConstCharStar;
+	var button1Label:cpp.ConstCharStar;
+	var button1Url:cpp.ConstCharStar;
+	var button2Label:cpp.ConstCharStar;
+	var button2Url:cpp.ConstCharStar;
 
 	/* ??? */
 	var instance:cpp.Int8;
