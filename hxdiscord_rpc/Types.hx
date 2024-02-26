@@ -33,6 +33,7 @@ extern class DiscordRichPresence {
 	var button1Url:cpp.ConstCharStar;
 	var button2Label:cpp.ConstCharStar;
 	var button2Url:cpp.ConstCharStar;
+
 	var instance:cpp.Int8;
 }
 
