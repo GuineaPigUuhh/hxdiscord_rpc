@@ -9,19 +9,41 @@ class Types {} // blank
 @:include('discord_rpc.h')
 @:unreflective
 @:structAccess
+@:native('DiscordButton')
+extern class DiscordButton {
+	@:native('DiscordButton')
+	static function create():DiscordButton;
+
+	var label:cpp.ConstCharStar;
+	var url:cpp.ConstCharStar;
+}
+
+@:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
+@:include('discord_rpc.h')
+@:unreflective
+@:structAccess
 @:native('DiscordRichPresence')
 extern class DiscordRichPresence {
 	@:native('DiscordRichPresence')
 	static function create():DiscordRichPresence;
 
+	/* Details */
 	var state:cpp.ConstCharStar; /* max 128 bytes */
 	var details:cpp.ConstCharStar; /* max 128 bytes */
+
+	/* Timestamp Config */
 	var startTimestamp:cpp.Int64;
 	var endTimestamp:cpp.Int64;
+
+	/* Images Path */
 	var largeImageKey:cpp.ConstCharStar; /* max 32 bytes */
-	var largeImageText:cpp.ConstCharStar; /* max 128 bytes */
 	var smallImageKey:cpp.ConstCharStar; /* max 32 bytes */
+
+	/* Images Overlap Texts */
+	var largeImageText:cpp.ConstCharStar; /* max 128 bytes */
 	var smallImageText:cpp.ConstCharStar; /* max 128 bytes */
+
+	/* Party */
 	var partyId:cpp.ConstCharStar; /* max 128 bytes */
 	var partySize:Int;
 	var partyMax:Int;
@@ -30,14 +52,10 @@ extern class DiscordRichPresence {
 	var joinSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var spectateSecret:cpp.ConstCharStar; /* max 128 bytes */
 
-	var buttons:Array<DiscordButton>;
+	/* Special */
+	var buttons:cpp.RawConstPointer<DiscordButton>;
 
 	var instance:cpp.Int8;
-}
-
-typedef DiscordButton = {
-	var label:cpp.ConstCharStar;
-	var url:cpp.ConstCharStar;
 }
 
 @:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
@@ -52,6 +70,7 @@ extern class DiscordUser {
 	var userId:cpp.ConstCharStar;
 	var username:cpp.ConstCharStar;
 	var discriminator:cpp.ConstCharStar;
+	var globalName:cpp.ConstCharStar;
 	var avatar:cpp.ConstCharStar;
 }
 
