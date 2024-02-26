@@ -29,10 +29,10 @@ extern class DiscordRichPresence {
 	var matchSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var joinSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var spectateSecret:cpp.ConstCharStar; /* max 128 bytes */
-	var button1Label:cpp.ConstCharStar;
-	var button1Url:cpp.ConstCharStar;
-	var button2Label:cpp.ConstCharStar;
-	var button2Url:cpp.ConstCharStar;
+	var button1Label:cpp.ConstCharStar; /* max 32 bytes */
+	var button1Url:cpp.ConstCharStar; /* max 512 bytes */
+	var button2Label:cpp.ConstCharStar; /* max 32 bytes */
+	var button2Url:cpp.ConstCharStar; /* max 512 bytes */
 
 	var instance:cpp.Int8;
 }
