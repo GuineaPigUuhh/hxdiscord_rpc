@@ -3,7 +3,6 @@ package hxdiscord_rpc;
 #if !cpp
 #error 'Discord RPC supports only C++ target platforms.'
 #end
-
 class Types {} // blank
 
 @:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
@@ -11,8 +10,7 @@ class Types {} // blank
 @:unreflective
 @:structAccess
 @:native('DiscordRichPresence')
-extern class DiscordRichPresence
-{
+extern class DiscordRichPresence {
 	@:native('DiscordRichPresence')
 	static function create():DiscordRichPresence;
 
@@ -31,6 +29,10 @@ extern class DiscordRichPresence
 	var matchSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var joinSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var spectateSecret:cpp.ConstCharStar; /* max 128 bytes */
+	var button1Label:cpp.ConstCharStar;
+	var button1Url:cpp.ConstCharStar;
+	var button2Label:cpp.ConstCharStar;
+	var button2Url:cpp.ConstCharStar;
 	var instance:cpp.Int8;
 }
 
@@ -39,8 +41,7 @@ extern class DiscordRichPresence
 @:unreflective
 @:structAccess
 @:native('DiscordUser')
-extern class DiscordUser
-{
+extern class DiscordUser {
 	@:native('DiscordUser')
 	static function create():DiscordUser;
 
@@ -55,8 +56,7 @@ extern class DiscordUser
 @:unreflective
 @:structAccess
 @:native('DiscordEventHandlers')
-extern class DiscordEventHandlers
-{
+extern class DiscordEventHandlers {
 	@:native('DiscordEventHandlers')
 	static function create():DiscordEventHandlers;
 
