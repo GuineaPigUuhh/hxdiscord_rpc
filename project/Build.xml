@@ -4,44 +4,44 @@
 
 	<!-- HxLib name == hxdiscord_rpc -->
 	<files id="haxe">
-		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/include" />
+		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/discord-rpc/include" />
 
 		<include name="${haxelib:hxdiscord_rpc}/project/Defines.xml" />
 	</files>
 
 	<files id="__main__">
-		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/include" />
+		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/discord-rpc/include" />
 
 		<include name="${haxelib:hxdiscord_rpc}/project/Defines.xml" />
 	</files>
 
-	<files id="Zet0x0-discord-rpc">
-		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/include" />
+	<files id="discord-rpc">
+		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/discord-rpc/include" />
 		<compilerflag value="-I${haxelib:hxdiscord_rpc}/project/rapidjson/include" />
 
-		<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/discord_rpc.cpp" />
-		<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/rpc_connection.cpp" />
-		<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/serialization.cpp" />
+		<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/discord_rpc.cpp" />
+		<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/rpc_connection.cpp" />
+		<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/serialization.cpp" />
 
 		<section if="windows">
 			<compilerflag value="-DDISCORD_WINDOWS" />
 
-			<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/connection_win.cpp" />
-			<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/discord_register_win.cpp" />
+			<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/connection_win.cpp" />
+			<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/discord_register_win.cpp" />
 		</section>
 
 		<section if="macos">
 			<compilerflag value="-DDISCORD_OSX" />
 
-			<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/connection_unix.cpp" />
-			<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/discord_register_osx.m" />
+			<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/connection_unix.cpp" />
+			<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/discord_register_osx.m" />
 		</section>
 
 		<section if="linux">
 			<compilerflag value="-DDISCORD_LINUX" />
 
-			<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/connection_unix.cpp" />
-			<file name="${haxelib:hxdiscord_rpc}/project/Zet0x0-discord-rpc/src/discord_register_linux.cpp" />
+			<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/connection_unix.cpp" />
+			<file name="${haxelib:hxdiscord_rpc}/project/discord-rpc/src/discord_register_linux.cpp" />
 		</section>
 
 		<include name="${haxelib:hxdiscord_rpc}/project/Defines.xml" />
@@ -62,6 +62,6 @@
 			<lib name="-lpthread" />
 		</section>
 
-		<files id="Zet0x0-discord-rpc" />
+		<files id="discord-rpc" />
 	</target>
 </xml>

@@ -8,6 +8,8 @@
 #include <sys/types.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <vector>
+#include <string>
 
 int GetProcessId()
 {
@@ -53,23 +55,37 @@ bool BaseConnection::Open()
 {
     const char* tempPath = GetTempPath();
     auto self = reinterpret_cast<BaseConnectionUnix*>(this);
-    self->sock = socket(AF_UNIX, SOCK_STREAM, 0);
+    int socket_type = SOCK_STREAM;
+#ifdef SOCK_CLOEXEC
+    socket_type |= SOCK_CLOEXEC;
+#endif
+    self->sock = socket(AF_UNIX, socket_type, 0);
     if (self->sock == -1) {
         return false;
     }
+#ifndef SOCK_CLOEXEC
+    fcntl(self->sock, F_SETFD, FD_CLOEXEC);
+#endif
     fcntl(self->sock, F_SETFL, O_NONBLOCK);
 #ifdef SO_NOSIGPIPE
     int optval = 1;
     setsockopt(self->sock, SOL_SOCKET, SO_NOSIGPIPE, &optval, sizeof(optval));
 #endif
 
-    for (int pipeNum = 0; pipeNum < 10; ++pipeNum) {
-        snprintf(
-          PipeAddr.sun_path, sizeof(PipeAddr.sun_path), "%s/discord-ipc-%d", tempPath, pipeNum);
-        int err = connect(self->sock, (const sockaddr*)&PipeAddr, sizeof(PipeAddr));
-        if (err == 0) {
-            self->isOpen = true;
-            return true;
+    std::vector<std::string> basePaths = {std::string(tempPath) + "/snap.discord", tempPath};
+
+    for (const auto& basePath : basePaths) {
+        for (int pipeNum = 0; pipeNum < 10; ++pipeNum) {
+            snprintf(PipeAddr.sun_path,
+                     sizeof(PipeAddr.sun_path),
+                     "%s/discord-ipc-%d",
+                     basePath.c_str(),
+                     pipeNum);
+            int err = connect(self->sock, (const sockaddr*)&PipeAddr, sizeof(PipeAddr));
+            if (err == 0) {
+                self->isOpen = true;
+                return true;
+            }
         }
     }
     self->Close();

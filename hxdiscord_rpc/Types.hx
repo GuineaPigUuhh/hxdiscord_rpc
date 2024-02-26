@@ -29,12 +29,15 @@ extern class DiscordRichPresence {
 	var matchSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var joinSecret:cpp.ConstCharStar; /* max 128 bytes */
 	var spectateSecret:cpp.ConstCharStar; /* max 128 bytes */
-	var button1Label:cpp.ConstCharStar; /* max 32 bytes */
-	var button1Url:cpp.ConstCharStar; /* max 512 bytes */
-	var button2Label:cpp.ConstCharStar; /* max 32 bytes */
-	var button2Url:cpp.ConstCharStar; /* max 512 bytes */
+
+	var buttons:Array<DiscordButton>;
 
 	var instance:cpp.Int8;
+}
+
+typedef DiscordButton = {
+	var label:cpp.ConstCharStar;
+	var url:cpp.ConstCharStar;
 }
 
 @:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
