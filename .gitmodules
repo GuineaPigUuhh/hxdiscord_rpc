@@ -7,3 +7,6 @@
 [submodule "discord-rpc"]
 	path = discord-rpc
 	url = https://github.com/Zet0x0/discord-rpc
+[submodule "project/discord-rpc"]
+	path = project/discord-rpc
+	url = https://github.com/Zet0x0/discord-rpc
