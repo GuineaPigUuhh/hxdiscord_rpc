@@ -1,3 +1,14 @@
+# Fork
+
+### Changes
+- Discord RPC Replaced By Zet0x0 Discord RPC fork
+
+### Installation
+Install By `Git`
+```bash
+haxelib git hxdiscord_rpc https://github.com/GuineaPigUuhh/hxdiscord_rpc
+```
+
 # hxdiscord_rpc
 
 ![](https://img.shields.io/github/repo-size/MAJigsaw77/hxdiscord_rpc) ![](https://badgen.net/github/open-issues/MAJigsaw77/hxdiscord_rpc) ![](https://badgen.net/badge/license/MIT/green)
