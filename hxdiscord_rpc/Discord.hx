@@ -32,12 +32,16 @@ extern class Discord {
 	@:native('Discord_Shutdown')
 	static function Shutdown():Void;
 
-	/* checks for incoming messages, dispatches callbacks */
+	/**
+	 * checks for incoming messages, dispatches callbacks 
+	 **/
 	@:native('Discord_RunCallbacks')
 	static function RunCallbacks():Void;
 
 	#if DISCORD_DISABLE_IO_THREAD
-	/* If you disable the lib starting its own io thread, you'll need to call this from your own */
+	/**
+	 * If you disable the lib starting its own io thread, you'll need to call this from your own
+	 **/
 	@:native('Discord_UpdateConnection')
 	static function UpdateConnection():Void;
 	#end
