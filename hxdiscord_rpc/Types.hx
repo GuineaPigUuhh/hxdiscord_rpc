@@ -1,8 +1,11 @@
 package hxdiscord_rpc;
 
+/*
 #if !cpp
 #error 'Discord RPC supports only C++ target platforms.'
 #end
+*/
+
 class Types {} // blank
 
 @:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
