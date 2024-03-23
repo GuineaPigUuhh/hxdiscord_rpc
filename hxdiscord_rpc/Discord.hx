@@ -1,10 +1,8 @@
 package hxdiscord_rpc;
 
-/*
 #if !cpp
 #error 'Discord RPC supports only C++ target platforms.'
 #end
-*/
 import hxdiscord_rpc.Types;
 
 @:buildXml('<include name="${haxelib:hxdiscord_rpc}/project/Build.xml" />')
@@ -36,14 +34,14 @@ extern class Discord {
 
 	/**
 	 * checks for incoming messages, dispatches callbacks 
-	 **/
+	**/
 	@:native('Discord_RunCallbacks')
 	static function RunCallbacks():Void;
 
 	#if DISCORD_DISABLE_IO_THREAD
 	/**
 	 * If you disable the lib starting its own io thread, you'll need to call this from your own
-	 **/
+	**/
 	@:native('Discord_UpdateConnection')
 	static function UpdateConnection():Void;
 	#end
